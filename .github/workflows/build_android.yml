@@ -29,16 +29,15 @@ jobs:
       #     cd Payload
       #     ln -s ../Runner.app
       #     cd ..
-      - name: Slack Notification
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: general
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
-          SLACK_MESSAGE: 'Post Content :rocket:'
-          SLACK_TITLE: Post Title
-          SLACK_USERNAME: quangnh
-          SLACK_WEBHOOK: ${{ secrets.SLACK_KEY }}
-          
+      - name: Upload to GgDrive
+        uses: adityak74/google-drive-upload-git-action@main
+        with:
+          credentials: ${{ secrets.DRIVER_KEY }}
+          filename: "archive.zip"
+          folderId: ${{ secrets.FOLDER_KEY }}
+          name: "documentation.zip" 
+          overwrite: "true" 
+
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
