@@ -18,9 +18,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.3'
-      # - run: flutter pub get
-      # - run: flutter test
-      # - run: flutter build apk --release
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --release
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
@@ -29,16 +29,16 @@ jobs:
       #     ln -s ../Runner.app
       #     cd ..
       #     zip -r app.ipa Payload
-      - name: Set up ChromeDriver for Selenium
-        run: |
-          sudo apt-get update &&
-          wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" &&
-          apt-get install "google-chrome-stable_current_amd64.deb" -f
-      - name: Archive files
-        run: |
-          sudo apt-get update
-          sudo apt-get install zip
-          zip -r archive.zip *
+      # - name: Set up ChromeDriver for Selenium
+      #   run: |
+      #     sudo apt-get update &&
+      #     wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" &&
+      #     apt-get install "google-chrome-stable_current_amd64.deb" -f
+      # - name: Archive files
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install zip
+      #     zip -r archive.zip *
 
       - name: Upload to Google Drive
         uses: adityak74/google-drive-upload-git-action@main
