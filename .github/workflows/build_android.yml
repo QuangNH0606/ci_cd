@@ -18,9 +18,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.3'
-      - run: flutter pub get
-      - run: flutter test
-      - run: flutter build apk --release
+      # - run: flutter pub get
+      # - run: flutter test
+      # - run: flutter build apk --release
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
@@ -39,8 +39,7 @@ jobs:
       #     sudo apt-get update
       #     sudo apt-get install zip
       #     zip -r archive.zip *
-
-      - name: Upload to Google Drive
+      - name: Upload to gdrive
         uses: adityak74/google-drive-upload-git-action@main
         with:
           credentials: ${{ secrets.DRIVER_KEY }}
@@ -48,6 +47,14 @@ jobs:
           folderId: ${{ secrets.FOLDER_KEY }}
           name: "documentation.zip" # optional string
           overwrite: "true" # optional boolean
+      # - name: Upload to Google Drive
+      #   uses: adityak74/google-drive-upload-git-action@main
+      #   with:
+      #     credentials: ${{ secrets.DRIVER_KEY }}
+      #     filename: "archive.zip"
+      #     folderId: ${{ secrets.FOLDER_KEY }}
+      #     name: "documentation.zip" # optional string
+      #     overwrite: "true" # optional boolean
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
