@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.ci_cd">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="ci_cd"
         android:name="${applicationName}"

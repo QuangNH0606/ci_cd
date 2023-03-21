@@ -18,9 +18,8 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.3'
-      # - run: flutter pub get
-      # - run: flutter test
-      # - run: flutter build apk --release
+      - run: flutter pub get
+      - run: flutter build apk --release
       # - run: |
       #     flutter build ios --no-codesign
       #     cd build/ios/iphoneos
@@ -29,35 +28,9 @@ jobs:
       #     ln -s ../Runner.app
       #     cd ..
       #     zip -r app.ipa Payload
-      # - name: Set up ChromeDriver for Selenium
-      #   run: |
-      #     sudo apt-get update &&
-      #     wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" &&
-      #     apt-get install "google-chrome-stable_current_amd64.deb" -f
-      # - name: Archive files
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install zip
-      #     zip -r archive.zip *
-      - name: Upload to gdrive
-        uses: adityak74/google-drive-upload-git-action@main
-        with:
-          credentials: ${{ secrets.DRIVER_KEY }}
-          filename: "archive.zip"
-          folderId: ${{ secrets.FOLDER_KEY }}
-          name: "documentation.zip" # optional string
-          overwrite: "true" # optional boolean
-      # - name: Upload to Google Drive
-      #   uses: adityak74/google-drive-upload-git-action@main
-      #   with:
-      #     credentials: ${{ secrets.DRIVER_KEY }}
-      #     filename: "archive.zip"
-      #     folderId: ${{ secrets.FOLDER_KEY }}
-      #     name: "documentation.zip" # optional string
-      #     overwrite: "true" # optional boolean
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/debug/*,build/ios/iphoneos/app.ipa"
+          artifacts: "build/app/outputs/apk/release/app-release.apk,build/ios/iphoneos/app.ipa"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
