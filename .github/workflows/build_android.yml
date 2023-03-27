@@ -31,7 +31,7 @@ jobs:
       #     cd ..
       
       - name: Upload to GgDrive
-        uses: adityak74/google-drive-upload-git-action@main
+        uses: mathisve/gdrive-upload-action@main
         with:
           credentials: ${{ secrets.DRIVER_KEY }}
           filename: "archive.zip"
