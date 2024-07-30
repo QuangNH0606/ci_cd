@@ -4,8 +4,8 @@ on:
     branches:
       - 'main'
   push:
-    branches:
-      - 'main'
+    tags:
+      - '*'
 jobs:
   build:
     name: Upload apk to App Tester
@@ -22,6 +22,12 @@ jobs:
       - run: flutter test
       - run: flutter build apk --release
       - run: ls build/app/outputs/flutter-apk
+      - name: Create GitHub Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          draft: false
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -29,6 +35,7 @@ jobs:
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
+    
 
 
 
