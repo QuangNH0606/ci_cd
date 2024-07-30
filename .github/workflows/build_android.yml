@@ -26,8 +26,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.TOKEN }}
-          automatic_release_tag: ${{ github.ref }}
-          release_name: "Release ${{ github.ref }}"
+          automatic_release_tag: ${{ github.ref_name }}
+          release_name: "Release ${{ github.ref_name }}"
           prerelease: false
           draft: false
       - name: upload artifact to Firebase App Distribution
