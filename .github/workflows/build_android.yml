@@ -1,4 +1,4 @@
-name: Deploy to App Tester
+name: Android CI/CD
 on:
   pull_request:
     branches:
@@ -7,7 +7,7 @@ on:
     tags:
       - 'v*.*.*'
 jobs:
-  build-android :
+  build:
     name: Upload apk to App Tester
     runs-on: ubuntu-latest
     steps:
@@ -15,36 +15,28 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-          cache: 'gradle'
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.7'
-          cache: true
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            # Caching build artifacts can be optional depending on your setup
-            # build/app/outputs/flutter-apk
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --release
       - run: ls build/app/outputs/flutter-apk
+      - name: Create GitHub Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.TOKEN }}
+          automatic_release_tag: ${{ github.ref_name }}
+          release_name: "Release ${{ github.ref_name }}"
+          prerelease: false
+          draft: false
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
-          releaseNotes:
-            description: "Release ${{ github.ref_name }}"
-            required: false
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
-          
     
 
 
