@@ -28,11 +28,6 @@ jobs:
             ${{ runner.os }}-flutter-
       - run: flutter pub get
       - run: flutter test
-      - name: Setup Fastlane
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.222
-          rubygems: latest
       - name: Fastlane Match setup
         run: |
           cd ios
