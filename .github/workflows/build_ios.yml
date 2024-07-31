@@ -31,12 +31,12 @@ jobs:
       - name: Setup Fastlane
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 2.222
           rubygems: latest
       - name: Fastlane Match setup
         run: |
           cd ios
-          fastlane dev
+          fastlane
       - name: flutter build iOS
         run: flutter build ios --release
           
