@@ -5,7 +5,7 @@ on:
       - 'main'
   push:
     tags:
-      - 'ios*'
+      - 'c*.*.*'
 jobs:
   build-android :
     name: Upload ios to App Tester
