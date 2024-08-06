@@ -12,7 +12,7 @@ jobs:
     name: build
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.3.7'
@@ -37,7 +37,6 @@ jobs:
           certificate-password: ${{secrets.IOS_BUILD_CERTIFICATE_PASSWORD}}
           provisioning-profile-base64: ${{secrets.IOS_MOBILE_PROVISIONING_PROFILE_BASE64}}
           keychain-password: ${{secrets.IOS_GITHUB_KEYCHAIN_PASSWORD}}
-
       - name: Archive IPA
         uses: actions/upload-artifact@v2
         with:
@@ -53,4 +52,4 @@ jobs:
             description: "Release ${{ github.ref_name }}"
             required: false
           groups: testers
-          file: build/ios/ipa/ci_cd.ipa/app-release.apk
+          file: build/ios/ipa/ci_cd.ipa
