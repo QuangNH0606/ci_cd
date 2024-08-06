@@ -48,8 +48,5 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
-          releaseNotes:
-            description: "Release ${{ github.ref_name }}"
-            required: false
           groups: testers
           file: build/ios/ipa/ci_cd.ipa
