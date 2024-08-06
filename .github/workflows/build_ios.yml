@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     name: build
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
       - uses: cedvdb/action-flutter-build-ios@v1
@@ -26,6 +26,14 @@ jobs:
         with:
           name: release-ipa
           path: build/ios/ipa/ci_cd.ipa
+  distribute-ios:
+    needs: build-ios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: ci_cd.ipa
       - run: ls build/ios/ipa/ci_cd.ipa
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
