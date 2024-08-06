@@ -27,4 +27,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release-ipa
-          path: build/ios/ipa/Runner.ipa
+          path: build/ios/ipa/ci_cd.ipa
