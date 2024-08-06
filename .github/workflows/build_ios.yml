@@ -5,39 +5,26 @@ on:
       - 'main'
   push:
     tags:
-      - 'c*.*.*'
+      - 'ios*.*.*'
+
 jobs:
-  build-android :
-    name: Upload ios to App Tester
-    runs-on: ubuntu-latest
+  build:
+    name: build
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v2
+
+      - uses: cedvdb/action-flutter-build-ios@v1
         with:
-          flutter-version: '3.3.7'
-          cache: true
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v3
+          # always use --export-options-plist=ios/GithubActionsExportOptions.plist
+          build-cmd: flutter build ipa --release --flavor dev --export-options-plist=ios/GithubActionsExportOptions.plist
+          certificate-base64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+          certificate-password: ${{ secrets.IOS_BUILD_CERTIFICATE_PASSWORD }}
+          provisioning-profile-base64: ${{ secrets.IOS_MOBILE_PROVISIONING_PROFILE_BASE64 }}
+          keychain-password: ${{ secrets.IOS_GITHUB_KEYCHAIN_PASSWORD }}
+
+      - name: Archive IPA
+        uses: actions/upload-artifact@v2
         with:
-          path: |
-            ~/.pub-cache
-            # Caching build artifacts can be optional depending on your setup
-            # build/app/outputs/flutter-apk
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-flutter-
-      - run: flutter pub get
-      - run: flutter test
-      - name: Fastlane Match setup
-        run: |
-          cd ios
-          fastlane
-      - name: flutter build iOS
-        run: flutter build ios --release
-          
-    
-
-
-
-
-          
+          name: release-ipa
+          path: build/ios/ipa/Runner.ipa
