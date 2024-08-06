@@ -23,7 +23,7 @@ jobs:
       - name: Archive IPA
         uses: actions/upload-artifact@v2
         with:
-          name: release-ipa
+          name: ci_cd.ipa
           path: build/ios/ipa/ci_cd.ipa
   distribute-ios:
     needs: build-ios
@@ -33,11 +33,10 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: ci_cd.ipa
-      - run: ls build/ios/ipa/ci_cd.ipa
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: testers
-          file: build/ios/ipa/ci_cd.ipa
+          file: ci_cd.ipa
