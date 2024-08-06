@@ -8,8 +8,7 @@ on:
       - 'ios*.*.*'
 
 jobs:
-  build:
-    build-ios:
+  build-ios:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v1
