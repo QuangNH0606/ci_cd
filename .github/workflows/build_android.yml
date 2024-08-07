@@ -51,7 +51,9 @@ jobs:
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
-          releaseNotes: "Release version:  ${{ env.RELEASE_TAG }}/nNotes:${{ env.RELEASE_NOTES }}"
+          releaseNotes: |
+            Release version:  ${{ env.RELEASE_TAG }}
+            Notes: ${{ env.RELEASE_NOTES }}
           
     
 
