@@ -36,7 +36,14 @@ jobs:
       - run: ls build/app/outputs/flutter-apk
       - name: Extract tag
         id: extract_tag
-        run: echo "RELEASE_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          echo "RELEASE_TAG=$TAG" >> $GITHUB_ENV
+      - name: Extract release notes
+        id: extract_notes
+        run: |
+          NOTES=$(git for-each-ref refs/tags/${GITHUB_REF#refs/tags/} --format='%(contents)')
+          echo "RELEASE_NOTES=$NOTES" >> $GITHUB_ENV
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -44,7 +51,7 @@ jobs:
           serviceCredentialsFileContent: ${{secrets.CREDENTIAL_FILE_CONTENT}}
           groups: testers
           file: build/app/outputs/flutter-apk/app-release.apk
-          releaseNotes: "Release version ${{ env.RELEASE_TAG }}"
+          releaseNotes: "Release version:  ${{ env.RELEASE_TAG }}/nNotes:${{ env.RELEASE_NOTES }}"
           
     
 
