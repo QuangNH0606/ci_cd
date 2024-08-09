@@ -59,14 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
-    _adad();
+    _adadd();
   }
 
-  void _adad() {
-    helo();
+  void _adadd() {
+    heloa();
   }
 
-  void helo() {}
+  void heloa() {}
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -104,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
+            SizedBox(),
             Text(
               '$_counter',
             ),
