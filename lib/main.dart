@@ -59,8 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    _adad();
   }
 
+  void _adad() {
+    helo();
+  }
+
+  void helo() {}
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
