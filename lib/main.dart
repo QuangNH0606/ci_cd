@@ -107,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
             ),
+            SizedBox(height: 10),
           ],
         ),
       ),
